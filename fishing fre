@@ -1,0 +1,131 @@
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
+local Player = game.Players.LocalPlayer
+local replicatedStorage = game:GetService("ReplicatedStorage")
+
+--//
+local remote = replicatedStorage:WaitForChild("Remotes"):WaitForChild("UseRod")
+local remote2 = replicatedStorage:WaitForChild("Remotes"):WaitForChild("EquipRod")
+local remote3 = replicatedStorage:WaitForChild("Remotes"):WaitForChild("DestroyFish")
+--//
+local Window = OrionLib:MakeWindow({
+    Name = "Shan's Fun Hub | V.2.1",
+    IntroText = "Shan's Hub",
+    HidePremium = false,
+    SaveConfig = false,
+    ConfigFolder = "OrionTest",
+    Draggable = true
+})
+OrionLib:MakeNotification({
+    Name = "Successfully Logged in!",
+    Content = "You are logged in as " .. Player.Name .. ".",
+    Image = "rbxassetid://4483345998",
+    Time = 5
+})
+OrionLib:MakeNotification({
+    Name = "Successfully",
+    Content = "Successfully loaded Shan Hub",
+    Image = "rbxassetid://4483345998",
+    Time = 5
+})
+
+-- TABS
+local HomeTab = Window:MakeTab({
+    Name = "Home",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+local MainTab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+local HubTab = Window:MakeTab({
+    Name = "Hubs",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+local JoinGameTab = Window:MakeTab({
+    Name = "Join Game",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+}
+local MiscTab = Window:MakeTab({
+    Name = "Miscellaneous",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+-- Home Tab Sections
+local playerName = game.Players.LocalPlayer.Name  -- Get the player's name
+local HomeSection = HomeTab:AddSection({ Name = "Welcome" })
+
+-- Add welcome message with player's name
+HomeSection:AddParagraph("Info", "Welcome " .. playerName .. "! Enjoy a variety of features to enhance your experience! Version 2")
+-- Copy Orion Document Link Button
+HomeSection:AddButton({
+    Name = "Copy Orion Document Link",
+    Callback = function()
+        -- Copy the documentation link to clipboard
+        setclipboard("https://github.com/shlexware/Orion/blob/main/Documentation.md")
+        -- Notify the user
+        OrionLib:MakeNotification({
+            Name = "Link Copied",
+            Content = "Orion Hub document link has been copied. Check your clipboard.",
+            Time = 5,
+            Icon = "rbxassetid://4483345998" -- Notification icon
+        })
+    end
+})
+
+----sections
+---home tab sections subvision 2??
+local MainHomeTab = HomeTab:AddSection({ Name = "Home"})
+local MessageFCSection = HomeTab:AddSection({ Name = "Owner message"})
+local BetaSection = HomeTab:AddSection({ Name = "Beta Features"})
+local GettingdiscontinueSection = HomeTab:AddSection({ Name = "Getting discontinue" })
+-- Main Tab Sections
+local MainSection = MainTab:AddSection({ Name = "Main Features" })
+local PlayerFeature = MainTab:AddSection({ Name = "Player Features"})
+local TeleportSection = MainTab:AddSection({ Name = "Teleportation" })
+local EspSection = MainTab:AddSection({ Name = "Esp" })
+local TrollSection = MainTab:AddSection({ Name = "Troll"})
+---Hub tab sections
+local MainHubInfoSection = HubTab:AddSection({ Name = "INFO" })
+local MainHubSection = HubTab:AddSection({ Name = "Hubs"})
+local MoreHubsMadeWithShanSection = HubTab:AddSection({ Name = "Hubs | Shan's"})
+local MainHubWithKeysSection = HubTab:AddSection({ Name = "Hubs with Keys"})
+local UniversalHubSection = HubTab:AddSection({ Name = "Universal | non hubs" })
+----Game tab sections
+local MainGameSection = JoinGameTab:AddSection({ Name = "Main" })
+
+-- Misc Tab Sections
+local MiscMainSection = MiscTab:AddSection({ Name = "Main" })
+local FPSBoostSection = MiscTab:AddSection({ Name = "Performance" })
+----Home tab feature
+MainHomeTab:AddButton({
+    Name = "Infinite Yield",
+    Callback = function()
+    ---executes innifite yield
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+    OrionLib:MakeNotification({
+        Name = "Executed successfully",
+        Content = "Successfully executed Infinite Yield",
+        Time = 5,
+        Icon = "rbxassetid://4483345998"
+    })
+    end
+})
+MainSection:Toggle({
+    Name = "Auto Fish",
+    Callback = function(state)
+        local autoFish = state -- Set the toggle state inside the callback
+        while autoFish do
+            replicatedStorage.Remotes.DestroyFish:FireServer(FishModel, true)
+            task.wait(3) -- Wait for 3 seconds before firing again
+        end
+    end
+})
+
+
+
+OrionLib:Init()
